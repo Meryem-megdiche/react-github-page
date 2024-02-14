@@ -1,15 +1,18 @@
 import { Box, Typography, useTheme } from "@mui/material";
+import React, { useState } from 'react';
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import Button from '@mui/material/Button';
 import Header from "../../components/Header";
+import Form from "../ping";
+import { Link } from 'react-router-dom';
 
 const Team = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
-    { field: "id", headerName: "ID" },
     {
       field: "Nom",
       headerName: "Nom",
@@ -17,16 +20,25 @@ const Team = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "type ",
-      headerName: "type  ",
+      field: "Type ",
+      headerName: "Type  ",
       type: "String",
       headerAlign: "left",
       align: "left",
       flex: 2,
     },
     {
-      field: "Département",
-      headerName: "Département",
+      field: "AdresseIp ",
+      headerName: "AdresseIp  ",
+      type: "String",
+      headerAlign: "left",
+      align: "left",
+      flex: 2,
+    },
+     
+    {
+      field: "Emplacement",
+      headerName: "Emplacement",
       flex: 2,
     },
     {
@@ -39,17 +51,20 @@ const Team = () => {
       headerName: "Actions",
       flex: 3.5,
       renderCell: (params) => {
+        
         return (
           <Box display="flex" justifyContent="end" mt="5px">
-            <Button onClick={() => handleButton1Click(params.row)} color="secondary" variant="contained" size="5px">
-              modifier
-            </Button>
+          
+        <Button onClick={handleAddButtonClick} color="secondary" variant="contained">
+          Modifier
+        </Button>
+        {isFormOpen && <Form />}
+      
             <Button onClick={() => handleButton2Click(params.row)} color="secondary" variant="contained" size="5px">
-              supprimer
+              Supprimer
             </Button>
             <Button onClick={() => handleButton3Click(params.row)} color="secondary" variant="contained"size="5px">
-              Historique 
-              Activité
+              Ping
             </Button>
           </Box>
         );
@@ -69,10 +84,22 @@ const Team = () => {
   const handleButton3Click = (row) => {
     // Logique pour gérer l'action du bouton 3 ici
   };
+  const handleAddButtonClick = () => {
+    setIsFormOpen(true); // Ouvrir le formulaire lors du clic sur le bouton Ajouter
+  };
 
   return (
     <Box m="20px">
       <Header title="EQUIPEMENT" subtitle="LISTE D'EQUIPEMNT " />
+         {/* Bouton pour ouvrir le formulaire */}
+         <Box display="flex" justifyContent="end" mb="20px">
+         <Link to="/equip" style={{ textDecoration: 'none' }}>
+        <Button onClick={handleAddButtonClick} color="secondary" variant="contained">
+          Ajouter un équipement
+        </Button>
+        </Link>
+      </Box>
+      {isFormOpen && <Form />}
       <Box
         m="40px 0 0 0"
         height="75vh"

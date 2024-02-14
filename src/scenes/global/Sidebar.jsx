@@ -136,12 +136,13 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Ajouter un équipement "
+              title="PING "
               to="/contacts"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
+           
             <Item
               title="Configurer un équipement "
               to="/invoices"
