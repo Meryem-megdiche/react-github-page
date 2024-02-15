@@ -3,12 +3,28 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-
+import axios from "axios";
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleAddUser = async (values) => {
+    try {
+      const newUser = {
+        username: values.username,
+        email: values.email,
+        number: values.number,
+        
+       
+      };
+
+      // Affichez les données qui seront envoyées
+      console.log("Nouvel user :", newUser);
+      const response = await axios.post('http://localhost:3001/user/users', newUser);
+
+      console.log("Réponse du serveur :", response.data);
+    } catch (error) {
+      console.error('Erreur lors de l\'ajout de user :', error);
+    }
   };
 
   return (
@@ -16,19 +32,19 @@ const Form = () => {
       <Header title="CREATE USER" subtitle="Create a New User Profile" />
 
       <Formik
-        onSubmit={handleFormSubmit}
+        onSubmit={handleAddUser}
         initialValues={initialValues}
         validationSchema={checkoutSchema}
       >
         {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
+         values,
+         errors,
+         touched,
+         handleBlur,
+         handleChange,
+         handleSubmit,
         }) => (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} methos="POST">
             <Box
               display="grid"
               gap="30px"
@@ -77,24 +93,12 @@ const Form = () => {
                 helperText={touched.number && errors.number}
                 sx={{ gridColumn: "span 4" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="role"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.role}
-                name="role"
-                error={!!touched.role && !!errors.role}
-                helperText={touched.role && errors.role}
-                sx={{ gridColumn: "span 4" }}
-              />
+          
             
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Ajout
+                Ajouter
               </Button>
             </Box>
           </form>
@@ -112,7 +116,7 @@ const checkoutSchema = yup.object().shape({
   email: yup.string().required("required"),
   
   number: yup.string().matches(phoneRegExp, "Phone number is not valid").required("required"),
-  role: yup.string().required("required"),
+ 
   
 });
 const initialValues = {
@@ -120,7 +124,7 @@ const initialValues = {
   email: "",
   
   number: "",
-  role: "",
+ 
   
 };
 

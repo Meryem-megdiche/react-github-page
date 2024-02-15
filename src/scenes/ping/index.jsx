@@ -1,72 +1,61 @@
-
-import { Box } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Box, Typography, useTheme } from "@mui/material";
+import React, { useState } from 'react';
+import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataContacts } from "../../data/mockData";
+import Button from '@mui/material/Button';
 import Header from "../../components/Header";
-import { useTheme } from "@mui/material";
+
 
 const Contacts = () => {
+ 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
     {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
+      field: "ID",
+      headerName: "ID",
+      flex: 2,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
+      field: "size",
+      headerName: "size",
+      flex: 2,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "temps",
+      headerName: "temps ",
+      type: "String",
       headerAlign: "left",
       align: "left",
+      flex: 2,
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
+      field: "TTL ",
+      headerName: "TTL  ",
+      type: "String",
+      headerAlign: "left",
+      align: "left",
+      flex: 2,
     },
+     
     {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
+      field: "timestamp",
+      headerName: "timestamp",
+      flex: 2,
     },
-    {
-      field: "address",
-      headerName: "Address",
-      flex: 1,
-    },
-    {
-      field: "city",
-      headerName: "City",
-      flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      flex: 1,
-    },
+    
+    
   ];
+ 
 
   return (
     <Box m="20px">
-      <Header
-        title="PING"
-        subtitle="List of Contacts for Future Reference"
-      />
+      <Header  subtitle="Historique de ping  " />
+        
       
-      <Box display="flex" justifyContent="end" mb="20px">
-         <Link to="/equip" style={{ textDecoration: 'none' }}>
-        <Button onClick={handleAddButtonClick} color="secondary" variant="contained">
-          Pinger
-        </Button>
-        </Link>
-      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -94,16 +83,9 @@ const Contacts = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${colors.grey[100]} !important`,
-          },
         }}
       >
-        <DataGrid
-          rows={mockDataContacts}
-          columns={columns}
-          
-        />
+        <DataGrid checkboxSelection rows={mockDataContacts} columns={columns} />
       </Box>
     </Box>
   );

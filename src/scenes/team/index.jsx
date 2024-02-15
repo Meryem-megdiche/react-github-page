@@ -55,10 +55,9 @@ const Team = () => {
         return (
           <Box display="flex" justifyContent="end" mt="5px">
           
-        <Button onClick={handleAddButtonClick} color="secondary" variant="contained">
-          Modifier
-        </Button>
-        {isFormOpen && <Form />}
+          <Button onClick={() => handleButton1Click(params.row)} color="secondary" variant="contained" size="5px">
+              Modifier 
+            </Button>
       
             <Button onClick={() => handleButton2Click(params.row)} color="secondary" variant="contained" size="5px">
               Supprimer
@@ -81,13 +80,16 @@ const Team = () => {
     // Logique pour gérer l'action du bouton 2 ici
   };
   
+  
   const handleButton3Click = (row) => {
-    // Logique pour gérer l'action du bouton 3 ici
+    axios.post('/api/ping', { ip: row.AdresseIp })
+      .then(response => {
+        console.log('Ping result:', response.data); // Vous pouvez gérer la réponse comme nécessaire
+      })
+      .catch(error => {
+        console.error('Error pinging:', error);
+      });
   };
-  const handleAddButtonClick = () => {
-    setIsFormOpen(true); // Ouvrir le formulaire lors du clic sur le bouton Ajouter
-  };
-
   return (
     <Box m="20px">
       <Header title="EQUIPEMENT" subtitle="LISTE D'EQUIPEMNT " />

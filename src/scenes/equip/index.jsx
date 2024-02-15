@@ -13,7 +13,7 @@ const Equip = () => {
 
   return (
     <Box m="20px">
-      <Header title="Ajout d'èquipement" subtitle="ajouter èquipement" />
+      <Header title="Ajout d'èquipement" subtitle="Voir la liste des èquipements" />
 
       <Formik
         onSubmit={handleFormSubmit}
